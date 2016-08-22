@@ -24,7 +24,7 @@ dependencies {
 
 ext {
     groupId = 'com.github.jarrodholliday'
-    versionId = '1.0.2'
+    versionId = '1.0.3'
     gitProjectUrl = "https://github.com/jarrodholliday/InfiniteViewPager"
     gitUrl = "https://github.com/jarrodholliday/InfiniteViewPager.git"
 }
