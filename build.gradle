@@ -1,13 +1,11 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
-        classpath 'com.github.dcendents:android-maven-plugin:1.2'
+        classpath 'com.android.tools.build:gradle:2.2.0-beta1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
     }
-}
-
-allprojects {
-	version = VERSION_NAME
 }

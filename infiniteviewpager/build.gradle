@@ -1,0 +1,116 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.ben-manes.versions'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion '23.0.3'
+
+    defaultConfig {
+        targetSdkVersion 24
+        minSdkVersion 9
+        versionName project.VERSION_NAME
+        versionCode Integer.parseInt(project.VERSION_CODE)
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:24.2.0'
+}
+
+ext {
+    groupId = 'com.github.jarrodholliday'
+    versionId = '1.0.2'
+    gitProjectUrl = "https://github.com/jarrodholliday/InfiniteViewPager"
+    gitUrl = "https://github.com/jarrodholliday/InfiniteViewPager.git"
+}
+
+group = groupId  // Maven Group ID for the artifact
+version = versionId
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+apply plugin: 'com.github.dcendents.android-maven'
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'jar'
+                groupId groupId
+                artifactId "infiniteviewpager"
+
+                // Add your description here
+                name "InfiniteViewPager"
+                description "Augment Android's ViewPager with wrap-around functionality."
+                url gitProjectUrl
+
+                // Set your license
+                licenses {
+                    license {
+                        name "The Apache Software License, Version 2.0"
+                        url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        name "jarrodholliday"
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    url gitProjectUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+//task javadoc(type: Javadoc) {
+//    source = android.sourceSets.main.java.srcDirs
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//}
+//
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
+
+artifacts {
+//    archives javadocJar
+    archives sourcesJar
+}
+
+apply plugin: 'com.jfrog.bintray'
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'InfiniteViewPager'
+        userOrg = "jarrodholliday"
+        licenses = ['Apache-2.0']
+        publish = true
+        publicDownloadNumbers = true
+        vcsUrl = gitUrl
+        version {
+            name = versionId
+            released  = new Date()
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+            gpg {
+                sign = true
+            }
+        }
+    }
+}

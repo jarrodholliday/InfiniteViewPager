@@ -45,7 +45,7 @@ public class InfiniteViewPager extends ViewPager {
 
     @Override
     public int getCurrentItem() {
-        if (getAdapter().getCount() == 0) {
+        if (getAdapter() == null || getAdapter().getCount() == 0) {
             return super.getCurrentItem();
         }
         int position = super.getCurrentItem();
