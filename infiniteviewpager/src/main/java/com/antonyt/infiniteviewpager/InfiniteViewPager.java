@@ -44,23 +44,14 @@ public class InfiniteViewPager extends ViewPager {
             super.setCurrentItem(item, smoothScroll);
             return;
         }
-        item = getOffsetAmount() + (item % getAdapter().getCount());
+        if (item < ((InfinitePagerAdapter) getAdapter()).getRealCount())
+            item = getOffsetAmount() + item;
         super.setCurrentItem(item, smoothScroll);
     }
 
     @Override
     public int getCurrentItem() {
-        if (getAdapter() == null || getAdapter().getCount() == 0) {
-            return super.getCurrentItem();
-        }
-        int position = super.getCurrentItem();
-        if (getAdapter() instanceof InfinitePagerAdapter) {
-            InfinitePagerAdapter infAdapter = (InfinitePagerAdapter) getAdapter();
-            // Return the actual item position in the data backing InfinitePagerAdapter
-            return (position % infAdapter.getRealCount());
-        } else {
-            return super.getCurrentItem();
-        }
+        return super.getCurrentItem();
     }
 
     private int getOffsetAmount() {
